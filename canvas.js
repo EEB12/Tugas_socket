@@ -33,3 +33,15 @@ window.addEventListener("load", () => {
     canvas.addEventListener("mouseup", finishedPosition);
     canvas.addEventListener("mousemove", draw);
 });
+
+window.addEventListener("resize", () => {
+    var wrapper = document.getElementById("signature-pad");
+    var canvas = wrapper.querySelector("canvas");
+    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+});
