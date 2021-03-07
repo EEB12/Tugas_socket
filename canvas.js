@@ -45,3 +45,4 @@ window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
 
 });
+
