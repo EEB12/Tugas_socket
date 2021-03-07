@@ -32,12 +32,22 @@ window.addEventListener("load", () => {
         context.beginPath();
         context.moveTo(e.clientX, e.clientY);
     }
+    function pen(){
+        mode = "pen"
+    }
+    function eraser(){
+        mode = "eraser"
+    }
+
+    
+    
     //event listener
     canvas.addEventListener("mousedown", startPosition);
     canvas.addEventListener("mouseup", finishedPosition);
     canvas.addEventListener("mousemove", draw);
     canvas.addEventListener("click",draw);
-
+    $("#pen").addEventListener("click",pen);  
+    $("#eraser").addEventListener("click",eraser);
     
 
 });
