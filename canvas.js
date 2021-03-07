@@ -24,14 +24,29 @@ window.addEventListener("load", () => {
 
     function draw(e){
         if(!painting) return;
-        context.lineWidth = 5;
-        context.lineCap = "round";
-
-        context.lineTo(e.clientX, e.clientY);
-        context.stroke();
-        context.beginPath();
-        context.moveTo(e.clientX, e.clientY);
+        
+        // if (mode=="pen"){
+            context.lineWidth = 5;
+            context.lineCap = "round";
+            if(mode=="eraser"){
+                // context.globalCompositeOperation = "destination-out";
+                // context.strokeStyle = "rgba(0,0,0,1)";
+                context.strokeStyle="red"
+            }
+            
+            context.lineTo(e.clientX, e.clientY);
+            context.stroke();
+            context.beginPath();
+            context.moveTo(e.clientX, e.clientY);
+        // } else{
+        //     context.globalCompositeOperation="destination-out";
+        //     context.arc(e.clientX, e.clientY,8,0,Math.PI*2,false);
+        //     context.fill();
+        // }
+        
     }
+    //event listener
+    
     function pen(){
         mode = "pen"
     }
@@ -40,14 +55,18 @@ window.addEventListener("load", () => {
     }
 
     
-    
-    //event listener
+    $("#pen").addEventListener("click",pen);  
+    $("#eraser").addEventListener("click",eraser);
     canvas.addEventListener("mousedown", startPosition);
     canvas.addEventListener("mouseup", finishedPosition);
     canvas.addEventListener("mousemove", draw);
     canvas.addEventListener("click",draw);
-    $("#pen").addEventListener("click",pen);  
-    $("#eraser").addEventListener("click",eraser);
+    
+    var mode="eraser";  
+    // $("#pen").click(function(){ mode="pen"; });  
+    // $("#eraser").click(function(){ mode="eraser"; });
+
+    
     
 
 });
@@ -63,4 +82,5 @@ window.addEventListener("resize", () => {
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 })
+
 

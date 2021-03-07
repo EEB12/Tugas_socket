@@ -1,10 +1,2 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-
-}
-
-#canvas{
-    border:2px solid black
-}
+body{ background-color: ivory; }
+canvas{border:1px solid red;}
