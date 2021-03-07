@@ -20,7 +20,7 @@ window.addEventListener("load", () => {
 
     function draw(e){
         if(!painting) return;
-        context.lineWidth = 5;
+        context.lineWidth = 3;
         context.lineCap = "round";
 
         context.lineTo(e.clientX, e.clientY);
@@ -32,4 +32,16 @@ window.addEventListener("load", () => {
     canvas.addEventListener("mousedown", startPosition);
     canvas.addEventListener("mouseup", finishedPosition);
     canvas.addEventListener("mousemove", draw);
+});
+
+window.addEventListener("resize", () => {
+    var wrapper = document.getElementById("signature-pad");
+    var canvas = wrapper.querySelector("canvas");
+    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
 });
