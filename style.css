@@ -14,26 +14,33 @@ body {
     overflow-y: scroll;
     width : 100%;
 }
-/* 
+
 .shapes{
     position : fixed;
 }
 
-.shape{
-    display : inline-block;
-}
-
-.shape-square{
+#shape-square{
     height: 30px;
     width: 30px;
     background-color: #555;
+    display : inline-block;
+    
 }
 
-.shape-triangle{
+#shape-triangle{
     width: 0;
 	height: 0;
 	border-left: 15px solid transparent;
 	border-right: 15px solid transparent;
 	border-bottom: 30px solid #555;
-} */
+    display : inline-block;
+}
+
+#shape-circle{
+    height: 30px;
+    width: 30px;
+    background-color: #555;
+    border-radius: 50%;
+    display : inline-block;
+}
 
