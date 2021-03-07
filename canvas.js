@@ -55,13 +55,14 @@ window.addEventListener("load", () => {
     }
 
     
-    $("#pen").addEventListener("click",pen);  
-    $("#eraser").addEventListener("click",eraser);
+   
     canvas.addEventListener("mousedown", startPosition);
     canvas.addEventListener("mouseup", finishedPosition);
     canvas.addEventListener("mousemove", draw);
     canvas.addEventListener("click",draw);
     
+    $("#pen").addEventListener("click",pen);  
+    $("#eraser").addEventListener("click",eraser);
     var mode="eraser";  
     // $("#pen").click(function(){ mode="pen"; });  
     // $("#eraser").click(function(){ mode="eraser"; });
