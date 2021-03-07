@@ -29,9 +29,30 @@ window.addEventListener("load", () => {
         context.moveTo(e.clientX, e.clientY);
     }
     //event listener
+    
+    function pen(){
+        mode = "pen"
+    }
+    function eraser(){
+        mode = "eraser"
+    }
+
+    
+   
     canvas.addEventListener("mousedown", startPosition);
     canvas.addEventListener("mouseup", finishedPosition);
     canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("click",draw);
+    
+    $("#pen").addEventListener("click",pen);  
+    $("#eraser").addEventListener("click",eraser);
+    var mode="eraser";  
+    // $("#pen").click(function(){ mode="pen"; });  
+    // $("#eraser").click(function(){ mode="eraser"; });
+
+    
+    
+
 });
 
 window.addEventListener("resize", () => {
