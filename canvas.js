@@ -20,7 +20,7 @@ window.addEventListener("load", () => {
 
     function draw(e){
         if(!painting) return;
-        context.lineWidth = 5;
+        context.lineWidth = 3;
         context.lineCap = "round";
 
         context.lineTo(e.clientX, e.clientY);
