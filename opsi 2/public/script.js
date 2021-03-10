@@ -1,4 +1,4 @@
-function drawLine(context, x1, y1, x2, y2,mode) {
+function drawLine(context, x1, y1, x2, y2,color,mode) {
 	
 	// context.lineTo(x1, y1);
     
@@ -6,22 +6,29 @@ function drawLine(context, x1, y1, x2, y2,mode) {
     // context.moveTo(x2, y2);
 	// context.stroke();
 	if(mode=="pen"){
-		context.strokeStyle='black'
-		context.moveTo(x1, y1);
-		context.lineTo(x2, y2);
-		context.stroke();
+		context.globalCompositeOperation="source-over"
+		context.beginPath();
+    	context.moveTo(x1, y1);
+    	context.lineTo(x2, y2);
+    	context.strokeStyle = color ;
+    	context.lineWidth = 2;
+    	context.stroke();
+    	context.closePath();
 
 	}
 	else if(mode=="eraser"){
-		// context.strokeStyle="red"
-		// context.moveTo(x1, y1);
-		// context.lineTo(x2, y2);
-		// context.stroke();
+	// 	// context.strokeStyle="red"
+	// 	// context.moveTo(x1, y1);
+	// 	// context.lineTo(x2, y2);
+	// 	// context.stroke();
+
+
 		context.globalCompositeOperation="destination-out";
         context.arc(x2,y2,20,0,Math.PI*2,false);
         context.fill();
         context.beginPath();
         context.moveTo(x2,y2);
+		context.clearrect(0,0,window.innerHeight,window.innerWidth)
 
 	}
 
@@ -45,14 +52,19 @@ document.addEventListener("DOMContentLoaded", function() {
 	canvas.height = height;
 
 	var drawing = false;
-	var x, y, prevX, prevY;
+	var x, y;
 
 	var socket = io.connect();
 	
+	var current = {
+		color: getRandomColor(),
+	  };
+
+
 	canvas.onmousedown = function(e) {
 		drawing = true;
-		prevX = x;
-		prevY = y;
+		current.x = x;
+		current.y = y;
 	}
 
 	canvas.onmouseup = function(e) {
@@ -72,27 +84,38 @@ document.addEventListener("DOMContentLoaded", function() {
 		
 		if (drawing) {
 
-
-			socket.emit('draw', {
+		
+				socket.emit('draw', {
 				
-				'x1': prevX,
-				'y1': prevY,
-				'x2': x,
-				'y2': y,
-				'mode': mode
-			});
+					'x1': current.x,
+					'y1': current.y,
+					'x2': x,
+					'y2': y,
+					"color" : current.color,
+					"mode": mode
+				});
+	
+				drawLine(context, current.x, current.y, x, y,current.color,mode);
+				current.x = x;
+				current.y = y;
+				// mode1=mode;
 
-			drawLine(context, prevX, prevY, x, y,mode);
-			prevX = x;
-			prevY = y;
-			// mode1=mode;
+			
+
+			
+
+			
 
 		}
 	}
 
 	socket.on('draw', function(data) {
-		drawLine(context, data.x1, data.y1, data.x2, data.y2, mode);
+		drawLine(context, data.x1, data.y1, data.x2, data.y2, data.color,data.mode);
 	});
+
+	// socket.on('eraser', function(data) {
+	// 	drawLine(context, data.x1, data.y1, data.x2, data.y2, mode);
+	// });
 
 	btn1.addEventListener("click", function(e) {
         mode="eraser"
@@ -101,4 +124,22 @@ document.addEventListener("DOMContentLoaded", function() {
     btn2.addEventListener("click", function(e) {
         mode="pen"
     });
+
+	function getRandomColor(){
+		var temp = [
+			"black",
+			"blue",
+			"red",
+			"green",
+			"yellow",
+			"purple",
+			"grey",
+			"pink",
+			"brown",
+			"orange",
+		  ];
+	
+		  var color = temp[Math.floor(Math.random() * 9)];
+		  return color;
+	}
 });
