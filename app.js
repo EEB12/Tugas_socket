@@ -14,4 +14,7 @@ io.on('connection', function (socket) {
 	socket.on('draw', function (data) {
 		socket.broadcast.emit('draw', data);
 	});
+	socket.on('eraser', function (data) {
+		socket.broadcast.emit('eraser', data);
+	});
 });

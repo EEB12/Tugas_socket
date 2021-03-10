@@ -1,10 +1,9 @@
-function drawLine(context, x1, y1, x2, y2,color) {
-	
+function drawLine(context, x1, y1, x2, y2,color,mode) {
 	// context.lineTo(x1, y1);
-    // // context.beginPath();
     // context.moveTo(x2, y2);
 	// context.stroke();
 	// if(mode=="pen"){
+	if(mode=="pen"){
 		context.globalCompositeOperation="source-over"
 		context.beginPath();
     	context.moveTo(x1, y1);
@@ -14,32 +13,21 @@ function drawLine(context, x1, y1, x2, y2,color) {
     	context.stroke();
     	context.closePath();
 
-	// }
-	// else if(mode=="eraser"){
+	}
+	else if(mode=="eraser"){
 	// 	// context.strokeStyle="red"
 	// 	// context.moveTo(x1, y1);
 	// 	// context.lineTo(x2, y2);
 	// 	// context.stroke();
 
 
-	// 	context.globalCompositeOperation="destination-out";
-    //     context.arc(x2,y2,20,0,Math.PI*2,false);
-    //     context.fill();
-    //     context.beginPath();
-    //     context.moveTo(x2,y2);
-	// 	context.clearrect(0,0,window.innerHeight,window.innerWidth)
+        context.arc(x2,y2,20,0,Math.PI*2,false);
+        context.fill();
+        context.beginPath();
+        context.moveTo(x2,y2);
+		context.clearrect(0,0,window.innerHeight,window.innerWidth)
 
-	// }
-
-	
-}
-
-// function erase(context, x1, y1, x2, y2,mode){
-// 	context.strokeStyle="red"
-// 	context.moveTo(x1, y1);
-// 	context.lineTo(x2, y2);
-// 	context.stroke();
-// }
+	}
 
 document.addEventListener("DOMContentLoaded", function() {
 	var canvas = document.getElementById('canvas');
@@ -51,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	canvas.height = height;
 
 	var drawing = false;
-	var x, y, prevX, prevY;
+	var x, y;
 
 	var socket = io.connect();
 	
@@ -81,30 +69,37 @@ document.addEventListener("DOMContentLoaded", function() {
 		y = e.clientY;
 		
 		if (drawing) {
-			
+
 				socket.emit('draw', {
 				
-					'x1': current.x,
 					'y1': current.y,
 					'x2': x,
 					'y2': y,
-					"color" : current.color
+					"color" : current.color,
+					"mode": mode
 				});
 	
-				drawLine(context, current.x, current.y, x, y,current.color);
+				drawLine(context, current.x, current.y, x, y,current.color,mode);
 				current.x = x;
 				current.y = y;
 				// mode1=mode;
+
+			
+
+			
+
+			
+
 		}
 	}
 
 	socket.on('draw', function(data) {
-		drawLine(context, data.x1, data.y1, data.x2, data.y2, data.color);
+		drawLine(context, data.x1, data.y1, data.x2, data.y2, data.color,data.mode);
 	});
 
-	socket.on('eraser', function(data) {
-		
-	});
+	// socket.on('eraser', function(data) {
+	// 	drawLine(context, data.x1, data.y1, data.x2, data.y2, mode);
+	// });
 
 	btn1.addEventListener("click", function(e) {
         mode="eraser"
