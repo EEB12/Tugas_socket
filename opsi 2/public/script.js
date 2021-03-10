@@ -1,8 +1,10 @@
 function drawLine(context, x1, y1, x2, y2,color,mode) {
+	
 	// context.lineTo(x1, y1);
+    
+    // // context.beginPath();
     // context.moveTo(x2, y2);
 	// context.stroke();
-	// if(mode=="pen"){
 	if(mode=="pen"){
 		context.globalCompositeOperation="source-over"
 		context.beginPath();
@@ -21,6 +23,7 @@ function drawLine(context, x1, y1, x2, y2,color,mode) {
 	// 	// context.stroke();
 
 
+		context.globalCompositeOperation="destination-out";
         context.arc(x2,y2,20,0,Math.PI*2,false);
         context.fill();
         context.beginPath();
@@ -28,6 +31,16 @@ function drawLine(context, x1, y1, x2, y2,color,mode) {
 		context.clearrect(0,0,window.innerHeight,window.innerWidth)
 
 	}
+
+	
+}
+
+// function erase(context, x1, y1, x2, y2,mode){
+// 	context.strokeStyle="red"
+// 	context.moveTo(x1, y1);
+// 	context.lineTo(x2, y2);
+// 	context.stroke();
+// }
 
 document.addEventListener("DOMContentLoaded", function() {
 	var canvas = document.getElementById('canvas');
@@ -62,16 +75,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var btn2 = document.getElementById("pen");
 
-	var mode = "black";
+	var mode = "pen";
 	
+
 	canvas.onmousemove = function(e) {
 		x = e.clientX;
 		y = e.clientY;
 		
 		if (drawing) {
 
+		
 				socket.emit('draw', {
 				
+					'x1': current.x,
 					'y1': current.y,
 					'x2': x,
 					'y2': y,
