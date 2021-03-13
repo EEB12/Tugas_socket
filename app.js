@@ -23,7 +23,9 @@ io.on('connection', function (socket) {
       thisRoom = 1;
       console.log(Newuser);
       socket.join(Newuser.roomname);
-		
+	  
+	  socket.broadcast.emit("passCheck",data);
+
 	  });
 	socket.on('draw', function (data) {
 		// console.log("tes")
