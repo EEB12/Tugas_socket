@@ -84,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		
 		if (drawing) {
 
-		
 				socket.emit('draw', {
 				
 					'x1': current.x,
@@ -100,22 +99,13 @@ document.addEventListener("DOMContentLoaded", function() {
 				current.y = y;
 				// mode1=mode;
 
-			
-
-			
-
-			
-
 		}
 	}
 
 	socket.on('draw', function(data) {
 		drawLine(context, data.x1, data.y1, data.x2, data.y2, data.color,data.mode);
-	});
+	});	
 
-	// socket.on('eraser', function(data) {
-	// 	drawLine(context, data.x1, data.y1, data.x2, data.y2, mode);
-	// });
 
 	btn1.addEventListener("click", function(e) {
         mode="eraser"
@@ -143,3 +133,4 @@ document.addEventListener("DOMContentLoaded", function() {
 		  return color;
 	}
 });
+

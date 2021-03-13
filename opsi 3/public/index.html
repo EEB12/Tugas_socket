@@ -19,12 +19,23 @@
 		<script src="script.js"></script>
 	</head>
 	<body>
+
 		
 		<script>
-			let userName = prompt("whats your name");
-			let ID = "";
+			let isAnswer = false;
+			let password = "test";
+			let userName = prompt("whats your name", "");
+			while(isAnswer == false){
+				let keyWord = prompt("Whats the password?", "");
+				if(password != keyWord){
+					alert("Password Salah");
+					continue;
+				}
+				isAnswer = true;
+				alert("Selamat Datang");	
+			}
 			var socket = io();
-			socket.emit("join room", {username : userName, roomName : room});
+			socket.emit("join", {username : userName});
 			var messages = document.getElementById('messages');
 			var form = document.getElementById('form');
 			var input = document.getElementById('input');
@@ -32,6 +43,10 @@
 			socket.on('send data',(data)=>{
 			  ID = data.id;
 			  console.log(" my ID:" + ID);
+			})
+
+			socket.on("alert password", (data) => {
+				alert("Password salah!!");
 			})
 	  
 			form.addEventListener('submit', function(e) {
@@ -59,6 +74,9 @@
     	<form id="form" action="">
       		<input id="input" autocomplete="off" /><button>Send</button>
     	</form>
+		<div class="checkbox mb-3" id="wrongPassword" style="text-align: center; display: none;">
+			<p style="color: red;">Password Salah!</p>
+		</div>
 		
 	</body>
 	<button id="pen" style="position:fixed; left: 10px; top: 10px">Pen</button>
