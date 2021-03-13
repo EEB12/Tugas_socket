@@ -11,7 +11,7 @@ Masukkan command *"node app.js"* pada terminal anda.
 Fitur - fitur yang tersedia di aplikasi :\
     1. Fitur Menulis Text\
     2. Fitur Menghapus\
-    3. Fitur ganti room\
+    3. Fitur ganti room
 
 ## Tata Cara Penggunaan Aplikasi
 
