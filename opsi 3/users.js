@@ -1,8 +1,8 @@
-let users = [];
+ users = [];
 
 function joinUser(socketId , userName, roomName) {
     const user = {
-      socketID :  socketId,
+      letsocketID :  socketId,
       username : userName,
     }
       users.push(user)
